@@ -27,7 +27,7 @@ services:
       - POSTGRES_DB_SSLMODE=disable
       - GORM_MODE=off
       - GIN_MODE=release
-      - SERVER_PORT=0.0.0.0:50015
+      - SERVER_PORT=0.0.0.0:50020
     restart: always  # Reiniciar automáticamente si falla
     depends_on:
       - postgres  # Asegura que Postgres se levante antes que test
