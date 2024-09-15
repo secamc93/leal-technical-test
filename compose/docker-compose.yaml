@@ -14,7 +14,7 @@ services:
       - my_network
 
   test:
-    image: m1993/cam:leal-test
+    image: cam1993/cam:leal-test
     container_name: leal-test-service
     ports:
       - "50020:50020"
