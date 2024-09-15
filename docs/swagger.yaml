@@ -1,0 +1,678 @@
+basePath: /
+definitions:
+  dtos.AccumulatedRewardRequest:
+    properties:
+      cashback_accumulated:
+        type: number
+      points_accumulated:
+        type: number
+      store_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  dtos.BranchRequest:
+    properties:
+      address:
+        type: string
+      name:
+        type: string
+      store_id:
+        type: integer
+    type: object
+  dtos.CampaignRequest:
+    properties:
+      branch_id:
+        type: integer
+      end_date:
+        type: string
+      name:
+        type: string
+      percentage:
+        type: number
+      start_date:
+        type: string
+      type:
+        type: string
+    type: object
+  dtos.RewardRequest:
+    properties:
+      description:
+        type: string
+      points_required:
+        type: number
+      store_id:
+        type: integer
+    type: object
+  dtos.StoreRequest:
+    properties:
+      conversion_factor:
+        type: number
+      name:
+        type: string
+    type: object
+  dtos.TransactionRequest:
+    properties:
+      amount:
+        type: number
+      branch_id:
+        type: integer
+      date:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  dtos.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: API test.
+  title: mi api
+  version: "1.0"
+paths:
+  /leal-test/acumulaterewards:
+    get:
+      consumes:
+      - application/json
+      description: Get all accumulated rewards
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all accumulated rewards
+      tags:
+      - accumulated_rewards
+    post:
+      consumes:
+      - application/json
+      description: Create a new accumulated reward
+      parameters:
+      - description: Reward data
+        in: body
+        name: reward
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.AccumulatedRewardRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new accumulated reward
+      tags:
+      - accumulated_rewards
+  /leal-test/acumulaterewards/{id}:
+    delete:
+      description: Delete an accumulated reward by ID
+      parameters:
+      - description: Reward ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      summary: Delete accumulated reward by ID
+      tags:
+      - accumulated_rewards
+    get:
+      consumes:
+      - application/json
+      description: Get accumulated reward by ID
+      parameters:
+      - description: Reward ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get accumulated reward by ID
+      tags:
+      - accumulated_rewards
+    put:
+      consumes:
+      - application/json
+      description: Update an accumulated reward
+      parameters:
+      - description: Reward ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Reward data
+        in: body
+        name: reward
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.AccumulatedRewardRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update an accumulated reward
+      tags:
+      - accumulated_rewards
+  /leal-test/acumulaterewards/user/{user_id}/store/{store_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get accumulated reward by UserID and StoreID
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: Store ID
+        in: path
+        name: store_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get accumulated reward by UserID and StoreID
+      tags:
+      - accumulated_rewards
+  /leal-test/branches:
+    get:
+      consumes:
+      - application/json
+      description: Get all branches
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all branches
+      tags:
+      - branches
+    post:
+      consumes:
+      - application/json
+      description: Create a new branch
+      parameters:
+      - description: Branch data
+        in: body
+        name: branch
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.BranchRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new branch
+      tags:
+      - branches
+  /leal-test/branches/{id}:
+    delete:
+      description: Delete a branch by ID
+      parameters:
+      - description: Branch ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      summary: Delete branch by ID
+      tags:
+      - branches
+    get:
+      consumes:
+      - application/json
+      description: Get branch by ID
+      parameters:
+      - description: Branch ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get branch by ID
+      tags:
+      - branches
+    put:
+      consumes:
+      - application/json
+      description: Update a branch
+      parameters:
+      - description: Branch ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Branch data
+        in: body
+        name: branch
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.BranchRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update a branch
+      tags:
+      - branches
+  /leal-test/campaigns:
+    get:
+      consumes:
+      - application/json
+      description: Get all campaigns
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all campaigns
+      tags:
+      - campaigns
+    post:
+      consumes:
+      - application/json
+      description: Create a new campaign
+      parameters:
+      - description: Campaign data
+        in: body
+        name: campaign
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CampaignRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new campaign
+      tags:
+      - campaigns
+  /leal-test/campaigns/{id}:
+    delete:
+      description: Delete a campaign by ID
+      parameters:
+      - description: Campaign ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      summary: Delete campaign by ID
+      tags:
+      - campaigns
+    get:
+      consumes:
+      - application/json
+      description: Get campaign by ID
+      parameters:
+      - description: Campaign ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get campaign by ID
+      tags:
+      - campaigns
+    put:
+      consumes:
+      - application/json
+      description: Update a campaign
+      parameters:
+      - description: Campaign ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Campaign data
+        in: body
+        name: campaign
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CampaignRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update a campaign
+      tags:
+      - campaigns
+  /leal-test/rewards:
+    get:
+      consumes:
+      - application/json
+      description: Get all rewards
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all rewards
+      tags:
+      - rewards
+    post:
+      consumes:
+      - application/json
+      description: Create a new reward
+      parameters:
+      - description: Reward data
+        in: body
+        name: reward
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.RewardRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new reward
+      tags:
+      - rewards
+  /leal-test/rewards/{id}:
+    delete:
+      description: Delete a reward by ID
+      parameters:
+      - description: Reward ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      summary: Delete reward by ID
+      tags:
+      - rewards
+    get:
+      consumes:
+      - application/json
+      description: Get reward by ID
+      parameters:
+      - description: Reward ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get reward by ID
+      tags:
+      - rewards
+    put:
+      consumes:
+      - application/json
+      description: Update a reward
+      parameters:
+      - description: Reward ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Reward data
+        in: body
+        name: reward
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.RewardRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update a reward
+      tags:
+      - rewards
+  /leal-test/rewards/store/{store_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get rewards by StoreID
+      parameters:
+      - description: Store ID
+        in: path
+        name: store_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get rewards by StoreID
+      tags:
+      - rewards
+  /leal-test/stores:
+    get:
+      consumes:
+      - application/json
+      description: Get all stores
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all stores
+      tags:
+      - stores
+    post:
+      consumes:
+      - application/json
+      description: Create store
+      parameters:
+      - description: Store to create
+        in: body
+        name: store
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.StoreRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create store
+      tags:
+      - stores
+  /leal-test/stores/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete store by ID
+      parameters:
+      - description: Store ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete store by ID
+      tags:
+      - stores
+    get:
+      consumes:
+      - application/json
+      description: Get store by ID
+      parameters:
+      - description: Store ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get store by ID
+      tags:
+      - stores
+    put:
+      consumes:
+      - application/json
+      description: Update store
+      parameters:
+      - description: Store ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Store to update
+        in: body
+        name: store
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.StoreRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update store
+      tags:
+      - stores
+  /leal-test/transactions:
+    get:
+      consumes:
+      - application/json
+      description: Get all transactions
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all transactions
+      tags:
+      - transactions
+    post:
+      consumes:
+      - application/json
+      description: Create a new transaction
+      parameters:
+      - description: Transaction data
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.TransactionRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new transaction
+      tags:
+      - transactions
+  /leal-test/transactions/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get transaction by ID
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get transaction by ID
+      tags:
+      - transactions
+  /leal-test/transactions/user/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get transactions by UserID
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get transactions by UserID
+      tags:
+      - transactions
+  /leal-test/users:
+    get:
+      consumes:
+      - application/json
+      description: Get all users
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create user
+      parameters:
+      - description: User to create
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.User'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create user
+      tags:
+      - users
+  /leal-test/users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete user by ID
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Get user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get user by ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update user
+      parameters:
+      - description: Store ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User to update
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.User'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update user
+      tags:
+      - users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: X-API-Key
+    type: apiKey
+  BasicAuth:
+    type: basic
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

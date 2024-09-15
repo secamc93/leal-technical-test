@@ -1,0 +1,995 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API test.",
+        "title": "mi api",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/leal-test/acumulaterewards": {
+            "get": {
+                "description": "Get all accumulated rewards",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accumulated_rewards"
+                ],
+                "summary": "Get all accumulated rewards",
+                "responses": {}
+            },
+            "post": {
+                "description": "Create a new accumulated reward",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accumulated_rewards"
+                ],
+                "summary": "Create a new accumulated reward",
+                "parameters": [
+                    {
+                        "description": "Reward data",
+                        "name": "reward",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.AccumulatedRewardRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/acumulaterewards/user/{user_id}/store/{store_id}": {
+            "get": {
+                "description": "Get accumulated reward by UserID and StoreID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accumulated_rewards"
+                ],
+                "summary": "Get accumulated reward by UserID and StoreID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Store ID",
+                        "name": "store_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/acumulaterewards/{id}": {
+            "get": {
+                "description": "Get accumulated reward by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accumulated_rewards"
+                ],
+                "summary": "Get accumulated reward by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Reward ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "description": "Update an accumulated reward",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accumulated_rewards"
+                ],
+                "summary": "Update an accumulated reward",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Reward ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Reward data",
+                        "name": "reward",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.AccumulatedRewardRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete an accumulated reward by ID",
+                "tags": [
+                    "accumulated_rewards"
+                ],
+                "summary": "Delete accumulated reward by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Reward ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/branches": {
+            "get": {
+                "description": "Get all branches",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "branches"
+                ],
+                "summary": "Get all branches",
+                "responses": {}
+            },
+            "post": {
+                "description": "Create a new branch",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "branches"
+                ],
+                "summary": "Create a new branch",
+                "parameters": [
+                    {
+                        "description": "Branch data",
+                        "name": "branch",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.BranchRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/branches/{id}": {
+            "get": {
+                "description": "Get branch by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "branches"
+                ],
+                "summary": "Get branch by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Branch ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "description": "Update a branch",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "branches"
+                ],
+                "summary": "Update a branch",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Branch ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Branch data",
+                        "name": "branch",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.BranchRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete a branch by ID",
+                "tags": [
+                    "branches"
+                ],
+                "summary": "Delete branch by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Branch ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/campaigns": {
+            "get": {
+                "description": "Get all campaigns",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "campaigns"
+                ],
+                "summary": "Get all campaigns",
+                "responses": {}
+            },
+            "post": {
+                "description": "Create a new campaign",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "campaigns"
+                ],
+                "summary": "Create a new campaign",
+                "parameters": [
+                    {
+                        "description": "Campaign data",
+                        "name": "campaign",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CampaignRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/campaigns/{id}": {
+            "get": {
+                "description": "Get campaign by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "campaigns"
+                ],
+                "summary": "Get campaign by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Campaign ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "description": "Update a campaign",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "campaigns"
+                ],
+                "summary": "Update a campaign",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Campaign ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Campaign data",
+                        "name": "campaign",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CampaignRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete a campaign by ID",
+                "tags": [
+                    "campaigns"
+                ],
+                "summary": "Delete campaign by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Campaign ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/rewards": {
+            "get": {
+                "description": "Get all rewards",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rewards"
+                ],
+                "summary": "Get all rewards",
+                "responses": {}
+            },
+            "post": {
+                "description": "Create a new reward",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rewards"
+                ],
+                "summary": "Create a new reward",
+                "parameters": [
+                    {
+                        "description": "Reward data",
+                        "name": "reward",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.RewardRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/rewards/store/{store_id}": {
+            "get": {
+                "description": "Get rewards by StoreID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rewards"
+                ],
+                "summary": "Get rewards by StoreID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Store ID",
+                        "name": "store_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/rewards/{id}": {
+            "get": {
+                "description": "Get reward by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rewards"
+                ],
+                "summary": "Get reward by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Reward ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "description": "Update a reward",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rewards"
+                ],
+                "summary": "Update a reward",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Reward ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Reward data",
+                        "name": "reward",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.RewardRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete a reward by ID",
+                "tags": [
+                    "rewards"
+                ],
+                "summary": "Delete reward by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Reward ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/stores": {
+            "get": {
+                "description": "Get all stores",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "stores"
+                ],
+                "summary": "Get all stores",
+                "responses": {}
+            },
+            "post": {
+                "description": "Create store",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "stores"
+                ],
+                "summary": "Create store",
+                "parameters": [
+                    {
+                        "description": "Store to create",
+                        "name": "store",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.StoreRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/stores/{id}": {
+            "get": {
+                "description": "Get store by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "stores"
+                ],
+                "summary": "Get store by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Store ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "description": "Update store",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "stores"
+                ],
+                "summary": "Update store",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Store ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Store to update",
+                        "name": "store",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.StoreRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete store by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "stores"
+                ],
+                "summary": "Delete store by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Store ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/transactions": {
+            "get": {
+                "description": "Get all transactions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "transactions"
+                ],
+                "summary": "Get all transactions",
+                "responses": {}
+            },
+            "post": {
+                "description": "Create a new transaction",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "transactions"
+                ],
+                "summary": "Create a new transaction",
+                "parameters": [
+                    {
+                        "description": "Transaction data",
+                        "name": "transaction",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.TransactionRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/transactions/user/{user_id}": {
+            "get": {
+                "description": "Get transactions by UserID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "transactions"
+                ],
+                "summary": "Get transactions by UserID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/transactions/{id}": {
+            "get": {
+                "description": "Get transaction by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "transactions"
+                ],
+                "summary": "Get transaction by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Transaction ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/users": {
+            "get": {
+                "description": "Get all users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get all users",
+                "responses": {}
+            },
+            "post": {
+                "description": "Create user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create user",
+                "parameters": [
+                    {
+                        "description": "User to create",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.User"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/users/{id}": {
+            "get": {
+                "description": "Get user by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get user by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "description": "Update user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Store ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "User to update",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.User"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete user by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete user by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "dtos.AccumulatedRewardRequest": {
+            "type": "object",
+            "properties": {
+                "cashback_accumulated": {
+                    "type": "number"
+                },
+                "points_accumulated": {
+                    "type": "number"
+                },
+                "store_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dtos.BranchRequest": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "store_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dtos.CampaignRequest": {
+            "type": "object",
+            "properties": {
+                "branch_id": {
+                    "type": "integer"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "percentage": {
+                    "type": "number"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.RewardRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "points_required": {
+                    "type": "number"
+                },
+                "store_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dtos.StoreRequest": {
+            "type": "object",
+            "properties": {
+                "conversion_factor": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.TransactionRequest": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "branch_id": {
+                    "type": "integer"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dtos.User": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "X-API-Key",
+            "in": "header"
+        },
+        "BasicAuth": {
+            "type": "basic"
+        },
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

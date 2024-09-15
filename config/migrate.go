@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"leal-technical-test/internal/domain/models"
 
 	"gorm.io/gorm"
 )
@@ -31,7 +32,13 @@ func NewMigrator(connection IDatabaseConnection) (*Migrator, error) {
 func (m *Migrator) Migrate() error {
 	// Realiza las migraciones de las entidades de la base de datos
 	err := m.db.AutoMigrate(
-	//	&decodeCtx_structs.AvlEvent{},
+		models.AccumulatedReward{},
+		models.Branch{},
+		models.Campaign{},
+		models.Reward{},
+		models.Transaction{},
+		models.User{},
+		models.Store{},
 	)
 
 	if err != nil {

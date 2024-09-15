@@ -2,6 +2,7 @@ package internal
 
 import (
 	"leal-technical-test/config"
+	"leal-technical-test/router"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,8 +33,12 @@ func NewServer() (*Server, error) {
 // Run inicia el servidor
 func (s *Server) Run() error {
 	db := config.NewPostgresConnection()
-	config.NewMigrator(db)
+	migratos, _ := config.NewMigrator(db)
+	migratos.Migrate()
 	defer db.Close()
+
+	appRouter := router.NewRouter(s.ginServer)
+	appRouter.InitializeRoutes()
 
 	s.logger.Success("Starting server on =>", s.address)
 	if err := s.ginServer.Run(s.address); err != nil {
