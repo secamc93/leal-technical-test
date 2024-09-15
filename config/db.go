@@ -124,7 +124,7 @@ func (p *postgresConnection) Connect() error {
 	}
 
 	var err error
-	p.connection, err = gorm.Open(postgres.Open(dsn), &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true, Logger: gormLogger.Default.LogMode(logMode)})
+	p.connection, err = gorm.Open(postgres.Open(dsn), &gorm.Config{DisableForeignKeyConstraintWhenMigrating: false, Logger: gormLogger.Default.LogMode(logMode)})
 	if err != nil {
 		return fmt.Errorf("failed to connect to database: %w", err)
 	}

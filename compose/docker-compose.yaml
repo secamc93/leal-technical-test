@@ -17,7 +17,7 @@ services:
     image: m1993/cam:leal-test
     container_name: leal-test-service
     ports:
-      - "50015:50015"
+      - "50020:50020"
     environment:
       - POSTGRES_DB_HOST=postgres
       - POSTGRES_DB_PORT=5432
