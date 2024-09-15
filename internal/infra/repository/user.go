@@ -17,6 +17,7 @@ type UserRepository interface {
 	Update(id uint, user *models.User) error
 	Create(user *models.User) error
 	GetByEmail(email string) bool
+	GetIdByEmail(email string) (uint, error)
 }
 
 // userRepository struct
@@ -87,4 +88,16 @@ func (r *userRepository) GetByEmail(email string) bool {
 		return false
 	}
 	return true
+}
+
+// GetIdByEmail retrieves a user ID by its email
+func (r *userRepository) GetIdByEmail(email string) (uint, error) {
+	var user models.User
+	if err := r.db.GetDB().Where("email = ?", email).First(&user).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return 0, fmt.Errorf("user not found")
+		}
+		return 0, err
+	}
+	return user.ID, nil
 }

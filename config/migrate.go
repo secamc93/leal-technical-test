@@ -1,9 +1,11 @@
 package config
 
 import (
+	"errors"
 	"fmt"
 	"leal-technical-test/internal/domain/models"
 
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -37,13 +39,41 @@ func (m *Migrator) Migrate() error {
 		models.Campaign{},
 		models.Reward{},
 		models.Transaction{},
-		models.User{},
+		models.User{}, // Realiza la migración de User
 		models.Store{},
 	)
-
 	if err != nil {
 		m.logger.Error(fmt.Sprintf("Error al migrar la base de datos: %v", err))
 		return err
+	}
+
+	// Crear un usuario por defecto después de migrar la tabla User
+	defaultUser := models.User{
+		Name:  "Admin",
+		Email: "admin@example.com",
+	}
+
+	// Hashear la contraseña antes de guardarla
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte("admin"), bcrypt.DefaultCost)
+	if err != nil {
+		m.logger.Error(fmt.Sprintf("Error al hashear la contraseña: %v", err))
+		return err
+	}
+	defaultUser.Password = string(hashedPassword)
+
+	// Verificar si el usuario ya existe, si no, crearlo
+	var user models.User
+	result := m.db.Where("email = ?", defaultUser.Email).First(&user)
+
+	if result.Error != nil && errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		// Crear el usuario por defecto si no existe
+		if err := m.db.Create(&defaultUser).Error; err != nil {
+			m.logger.Error(fmt.Sprintf("Error al crear el usuario por defecto: %v", err))
+			return err
+		}
+		m.logger.Success("Usuario por defecto creado exitosamente")
+	} else {
+		m.logger.Info("El usuario por defecto ya existe, no se creó uno nuevo")
 	}
 
 	m.logger.Success("Migraciones completadas exitosamente")

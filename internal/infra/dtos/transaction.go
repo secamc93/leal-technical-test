@@ -14,8 +14,7 @@ type TransactionResponse struct {
 	CashbackEarned float64   `json:"cashback_earned"`
 }
 type TransactionRequest struct {
-	UserID   uint      `json:"user_id"`
-	BranchID uint      `json:"branch_id"`
-	Amount   float64   `json:"amount" `
-	Date     time.Time `json:"date" `
+	UserID   uint    `json:"user_id"`
+	BranchID uint    `json:"branch_id"`
+	Amount   float64 `json:"amount" `
 }

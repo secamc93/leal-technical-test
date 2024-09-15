@@ -9,11 +9,7 @@ import (
 // @version		1.0
 // @description	API test.
 // @BasePath /
-// @securityDefinitions.apikey	ApiKeyAuth
-// @in	header
-// @name	X-API-Key
-// @securityDefinitions.basic	BasicAuth
-// @securityDefinitions.apikey	BearerAuth
+// @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
 func main() {

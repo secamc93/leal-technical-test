@@ -1,6 +1,7 @@
 package router
 
 import (
+	"leal-technical-test/config"
 	"leal-technical-test/internal/infra/controllers"
 
 	"github.com/gin-gonic/gin"
@@ -41,49 +42,56 @@ func (r *Router) InitializeRoutes() {
 
 	lealTestGroup := r.engine.Group("/leal-test")
 	{
-		// Store routes
-		lealTestGroup.GET("/stores", r.storeController.GetAllStores)
-		lealTestGroup.GET("/stores/:id", r.storeController.GetStoreById)
-		lealTestGroup.DELETE("/stores/:id", r.storeController.DeleteStore)
-		lealTestGroup.PUT("/stores/:id", r.storeController.UpdateStore)
-		lealTestGroup.POST("/stores", r.storeController.CreateStore)
-
-		lealTestGroup.GET("/users", r.userController.GetAllUsers)
-		lealTestGroup.GET("/users/:id", r.userController.GetUserById)
-		lealTestGroup.DELETE("/users/:id", r.userController.DeleteUser)
-		lealTestGroup.PUT("/users/:id", r.userController.UpdateUser)
+		// Public routes
+		lealTestGroup.POST("/login", r.userController.Login)
 		lealTestGroup.POST("/users", r.userController.CreateUser)
 
-		lealTestGroup.GET("/branches", r.branchController.GetAllBranches)
-		lealTestGroup.GET("/branches/:id", r.branchController.GetBranchById)
-		lealTestGroup.DELETE("/branches/:id", r.branchController.DeleteBranch)
-		lealTestGroup.PUT("/branches/:id", r.branchController.UpdateBranch)
-		lealTestGroup.POST("/branches", r.branchController.CreateBranch)
+		// Protected routes
+		protected := lealTestGroup.Group("/")
+		protected.Use(config.NewTokenManager().AuthMiddleware())
+		{
+			// Store routes
+			protected.GET("/stores", r.storeController.GetAllStores)
+			protected.GET("/stores/:id", r.storeController.GetStoreById)
+			protected.DELETE("/stores/:id", r.storeController.DeleteStore)
+			protected.PUT("/stores/:id", r.storeController.UpdateStore)
+			protected.POST("/stores", r.storeController.CreateStore)
 
-		lealTestGroup.GET("/campaigns", r.campaignController.GetAllCampaigns)
-		lealTestGroup.GET("/campaigns/:id", r.campaignController.GetCampaignById)
-		lealTestGroup.POST("/campaigns", r.campaignController.CreateCampaign)
-		lealTestGroup.PUT("/campaigns/:id", r.campaignController.UpdateCampaign)
-		lealTestGroup.DELETE("/campaigns/:id", r.campaignController.DeleteCampaign)
+			protected.GET("/users", r.userController.GetAllUsers)
+			protected.GET("/users/:id", r.userController.GetUserById)
+			protected.DELETE("/users/:id", r.userController.DeleteUser)
+			protected.PUT("/users/:id", r.userController.UpdateUser)
 
-		lealTestGroup.GET("/acumulaterewards", r.accumulatedRewardController.GetAllRewards)
-		lealTestGroup.GET("/acumulaterewards/:id", r.accumulatedRewardController.GetRewardById)
-		lealTestGroup.GET("/acumulaterewards/user/:user_id/store/:store_id", r.accumulatedRewardController.GetRewardByUserAndStore)
-		lealTestGroup.POST("/acumulaterewards", r.accumulatedRewardController.CreateReward)
-		lealTestGroup.PUT("/acumulaterewards/:id", r.accumulatedRewardController.UpdateReward)
-		lealTestGroup.DELETE("/acumulaterewards/:id", r.accumulatedRewardController.DeleteReward)
+			protected.GET("/branches", r.branchController.GetAllBranches)
+			protected.GET("/branches/:id", r.branchController.GetBranchById)
+			protected.DELETE("/branches/:id", r.branchController.DeleteBranch)
+			protected.PUT("/branches/:id", r.branchController.UpdateBranch)
+			protected.POST("/branches", r.branchController.CreateBranch)
 
-		lealTestGroup.GET("/rewards", r.rewardController.GetAllRewards)
-		lealTestGroup.GET("/rewards/:id", r.rewardController.GetRewardById)
-		lealTestGroup.GET("/rewards/store/:store_id", r.rewardController.GetRewardsByStoreId)
-		lealTestGroup.POST("/rewards", r.rewardController.CreateReward)
-		lealTestGroup.PUT("/rewards/:id", r.rewardController.UpdateReward)
-		lealTestGroup.DELETE("/rewards/:id", r.rewardController.DeleteReward)
+			protected.GET("/campaigns", r.campaignController.GetAllCampaigns)
+			protected.GET("/campaigns/:id", r.campaignController.GetCampaignById)
+			protected.POST("/campaigns", r.campaignController.CreateCampaign)
+			protected.PUT("/campaigns/:id", r.campaignController.UpdateCampaign)
+			protected.DELETE("/campaigns/:id", r.campaignController.DeleteCampaign)
 
-		lealTestGroup.GET("/transactions", r.transactionController.GetAllTransactions)
-		lealTestGroup.GET("/transactions/:id", r.transactionController.GetTransactionById)
-		lealTestGroup.GET("/transactions/user/:user_id", r.transactionController.GetTransactionsByUserId)
-		lealTestGroup.POST("/transactions", r.transactionController.CreateTransaction)
+			protected.GET("/acumulaterewards", r.accumulatedRewardController.GetAllRewards)
+			protected.GET("/acumulaterewards/:id", r.accumulatedRewardController.GetRewardById)
+			protected.GET("/acumulaterewards/user/:user_id/store/:store_id", r.accumulatedRewardController.GetRewardByUserAndStore)
+			protected.POST("/acumulaterewards", r.accumulatedRewardController.CreateReward)
+			protected.PUT("/acumulaterewards/:id", r.accumulatedRewardController.UpdateReward)
+			protected.DELETE("/acumulaterewards/:id", r.accumulatedRewardController.DeleteReward)
 
+			protected.GET("/rewards", r.rewardController.GetAllRewards)
+			protected.GET("/rewards/:id", r.rewardController.GetRewardById)
+			protected.GET("/rewards/store/:store_id", r.rewardController.GetRewardsByStoreId)
+			protected.POST("/rewards", r.rewardController.CreateReward)
+			protected.PUT("/rewards/:id", r.rewardController.UpdateReward)
+			protected.DELETE("/rewards/:id", r.rewardController.DeleteReward)
+
+			protected.GET("/transactions", r.transactionController.GetAllTransactions)
+			protected.GET("/transactions/:id", r.transactionController.GetTransactionById)
+			protected.GET("/transactions/user/:user_id", r.transactionController.GetTransactionsByUserId)
+			protected.POST("/transactions", r.transactionController.CreateTransaction)
+		}
 	}
 }

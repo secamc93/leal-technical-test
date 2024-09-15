@@ -8,7 +8,7 @@ import (
 
 type Campaign struct {
 	gorm.Model
-	Name       string    `json:"name" gorm:"type:varchar(100);not null;unique"`
+	Name       string    `json:"name" gorm:"type:varchar(100);unique"`
 	BranchID   uint      `json:"branch_id" gorm:"not null"`
 	Type       string    `json:"type" gorm:"type:varchar(20);not null;check:type IN ('double', 'additional')"`
 	Percentage float64   `json:"percentage" gorm:"type:decimal(5,2)"`

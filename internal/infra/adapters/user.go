@@ -6,11 +6,11 @@ import (
 )
 
 // Convierte un modelo de dominio a un DTO
-func ToUserDTO(user *models.User) dtos.User {
+func ToUserDTO(user *models.User) dtos.UserResponse {
 	if user == nil {
-		return dtos.User{}
+		return dtos.UserResponse{}
 	}
-	return dtos.User{
+	return dtos.UserResponse{
 		Id:    user.ID,
 		Name:  user.Name,
 		Phone: user.Phone,
@@ -19,11 +19,11 @@ func ToUserDTO(user *models.User) dtos.User {
 }
 
 // Convierte una lista de modelos de dominio a una lista de DTOs
-func ToUserDTOs(users []models.User) []dtos.User {
-	userDTOs := make([]dtos.User, len(users))
+func ToUserDTOs(users []models.User) []dtos.UserResponse {
+	userDTOs := make([]dtos.UserResponse, len(users))
 	for i, user := range users {
 		// Mapear los campos directamente, aplicando transformaciones si es necesario
-		userDTOs[i] = dtos.User{
+		userDTOs[i] = dtos.UserResponse{
 			Id:    user.ID,
 			Name:  user.Name,
 			Phone: user.Phone,
@@ -34,7 +34,7 @@ func ToUserDTOs(users []models.User) []dtos.User {
 }
 
 // Convierte un DTO en un modelo de dominio
-func ToUserModel(user dtos.User) models.User {
+func ToUserModel(user dtos.UserRequest) models.User {
 	return models.User{
 		Name:     user.Name,
 		Email:    user.Email,

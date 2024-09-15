@@ -48,6 +48,5 @@ func ToTransactionModel(transaction dtos.TransactionRequest) models.Transaction 
 		UserID:   transaction.UserID,
 		BranchID: transaction.BranchID,
 		Amount:   transaction.Amount,
-		Date:     transaction.Date,
 	}
 }

@@ -38,6 +38,7 @@ func NewStoreController() *StoreController {
 // @Tags stores
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Router /leal-test/stores [get]
 func (c *StoreController) GetAllStores(ctx *gin.Context) {
 	stores, err := c.service.GetAllStores()
@@ -57,6 +58,7 @@ func (c *StoreController) GetAllStores(ctx *gin.Context) {
 // @Tags stores
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Store ID"
 // @Router /leal-test/stores/{id} [get]
 func (c *StoreController) GetStoreById(ctx *gin.Context) {
@@ -84,6 +86,7 @@ func (c *StoreController) GetStoreById(ctx *gin.Context) {
 // @Tags stores
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Store ID"
 // @Router /leal-test/stores/{id} [delete]
 func (c *StoreController) DeleteStore(ctx *gin.Context) {
@@ -116,6 +119,7 @@ func (c *StoreController) DeleteStore(ctx *gin.Context) {
 // @Tags stores
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Store ID"
 // @Param store body dtos.StoreRequest true "Store to update"
 // @Router /leal-test/stores/{id} [put]
@@ -161,6 +165,7 @@ func (c *StoreController) UpdateStore(ctx *gin.Context) {
 // @Tags stores
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param store body dtos.StoreRequest true "Store to create"
 // @Router /leal-test/stores [post]
 func (c *StoreController) CreateStore(ctx *gin.Context) {

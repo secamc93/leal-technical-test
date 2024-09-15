@@ -57,17 +57,20 @@ definitions:
         type: number
       branch_id:
         type: integer
-      date:
-        type: string
       user_id:
         type: integer
     type: object
-  dtos.User:
+  dtos.UserLogin:
     properties:
       email:
         type: string
-      id:
-        type: integer
+      password:
+        type: string
+    type: object
+  dtos.UserRequest:
+    properties:
+      email:
+        type: string
       name:
         type: string
       password:
@@ -89,6 +92,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get all accumulated rewards
       tags:
       - accumulated_rewards
@@ -106,6 +111,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Create a new accumulated reward
       tags:
       - accumulated_rewards
@@ -119,6 +126,8 @@ paths:
         required: true
         type: integer
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Delete accumulated reward by ID
       tags:
       - accumulated_rewards
@@ -135,6 +144,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get accumulated reward by ID
       tags:
       - accumulated_rewards
@@ -157,6 +168,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Update an accumulated reward
       tags:
       - accumulated_rewards
@@ -179,6 +192,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get accumulated reward by UserID and StoreID
       tags:
       - accumulated_rewards
@@ -190,6 +205,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get all branches
       tags:
       - branches
@@ -207,6 +224,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Create a new branch
       tags:
       - branches
@@ -220,6 +239,8 @@ paths:
         required: true
         type: integer
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Delete branch by ID
       tags:
       - branches
@@ -236,6 +257,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get branch by ID
       tags:
       - branches
@@ -258,6 +281,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Update a branch
       tags:
       - branches
@@ -269,6 +294,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get all campaigns
       tags:
       - campaigns
@@ -286,6 +313,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Create a new campaign
       tags:
       - campaigns
@@ -299,6 +328,8 @@ paths:
         required: true
         type: integer
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Delete campaign by ID
       tags:
       - campaigns
@@ -315,6 +346,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get campaign by ID
       tags:
       - campaigns
@@ -337,9 +370,31 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Update a campaign
       tags:
       - campaigns
+  /leal-test/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and return JWT token
+      parameters:
+      - description: Login data
+        in: body
+        name: loginData
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UserLogin'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Login user
+      tags:
+      - auth
   /leal-test/rewards:
     get:
       consumes:
@@ -348,6 +403,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get all rewards
       tags:
       - rewards
@@ -365,6 +422,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Create a new reward
       tags:
       - rewards
@@ -378,6 +437,8 @@ paths:
         required: true
         type: integer
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Delete reward by ID
       tags:
       - rewards
@@ -394,6 +455,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get reward by ID
       tags:
       - rewards
@@ -416,6 +479,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Update a reward
       tags:
       - rewards
@@ -433,6 +498,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get rewards by StoreID
       tags:
       - rewards
@@ -444,6 +511,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get all stores
       tags:
       - stores
@@ -461,6 +530,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Create store
       tags:
       - stores
@@ -478,6 +549,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Delete store by ID
       tags:
       - stores
@@ -494,6 +567,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get store by ID
       tags:
       - stores
@@ -516,6 +591,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Update store
       tags:
       - stores
@@ -527,6 +604,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get all transactions
       tags:
       - transactions
@@ -544,6 +623,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Create a new transaction
       tags:
       - transactions
@@ -561,6 +642,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get transaction by ID
       tags:
       - transactions
@@ -578,6 +661,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get transactions by UserID
       tags:
       - transactions
@@ -589,6 +674,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get all users
       tags:
       - users
@@ -602,10 +689,12 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/dtos.User'
+          $ref: '#/definitions/dtos.UserRequest'
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Create user
       tags:
       - users
@@ -623,6 +712,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Delete user by ID
       tags:
       - users
@@ -639,6 +730,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get user by ID
       tags:
       - users
@@ -657,21 +750,17 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/dtos.User'
+          $ref: '#/definitions/dtos.UserRequest'
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Update user
       tags:
       - users
 securityDefinitions:
   ApiKeyAuth:
-    in: header
-    name: X-API-Key
-    type: apiKey
-  BasicAuth:
-    type: basic
-  BearerAuth:
     in: header
     name: Authorization
     type: apiKey

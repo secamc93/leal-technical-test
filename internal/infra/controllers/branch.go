@@ -36,6 +36,7 @@ func NewBranchController() *BranchController {
 // @Tags branches
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Router /leal-test/branches [get]
 func (c *BranchController) GetAllBranches(ctx *gin.Context) {
 	branches, err := c.service.GetAllBranches()
@@ -53,6 +54,7 @@ func (c *BranchController) GetAllBranches(ctx *gin.Context) {
 // @Tags branches
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Branch ID"
 // @Router /leal-test/branches/{id} [get]
 func (c *BranchController) GetBranchById(ctx *gin.Context) {
@@ -76,6 +78,7 @@ func (c *BranchController) GetBranchById(ctx *gin.Context) {
 // @Tags branches
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param branch body dtos.BranchRequest true "Branch data"
 // @Router /leal-test/branches [post]
 func (c *BranchController) CreateBranch(ctx *gin.Context) {
@@ -100,6 +103,7 @@ func (c *BranchController) CreateBranch(ctx *gin.Context) {
 // @Tags branches
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Branch ID"
 // @Param branch body dtos.BranchRequest true "Branch data"
 // @Router /leal-test/branches/{id} [put]
@@ -130,6 +134,7 @@ func (c *BranchController) UpdateBranch(ctx *gin.Context) {
 // @Summary Delete branch by ID
 // @Description Delete a branch by ID
 // @Tags branches
+// @Security ApiKeyAuth
 // @Param id path int true "Branch ID"
 // @Router /leal-test/branches/{id} [delete]
 func (c *BranchController) DeleteBranch(ctx *gin.Context) {

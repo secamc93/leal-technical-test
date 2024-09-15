@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"leal-technical-test/config"
 	"leal-technical-test/internal/domain/models"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -16,6 +17,7 @@ type CampaignRepository interface {
 	Delete(id uint) error
 	Update(id uint, campaign *models.Campaign) error
 	Create(campaign *models.Campaign) error
+	FindByBranchAndDate(branchID uint, date time.Time) (*models.Campaign, error)
 }
 
 // campaignRepository struct
@@ -33,7 +35,9 @@ func NewCampaignRepository(db config.IDatabaseConnection) CampaignRepository {
 // GetAll retrieves all campaigns
 func (r *campaignRepository) GetAll() ([]models.Campaign, error) {
 	var campaigns []models.Campaign
-	if err := r.db.GetDB().Find(&campaigns).Error; err != nil {
+	if err := r.db.GetDB().
+		Preload("Branch").
+		Find(&campaigns).Error; err != nil {
 		return nil, err
 	}
 	return campaigns, nil
@@ -42,7 +46,9 @@ func (r *campaignRepository) GetAll() ([]models.Campaign, error) {
 // GetById retrieves a campaign by its ID
 func (r *campaignRepository) GetById(id uint) (*models.Campaign, error) {
 	var campaign models.Campaign
-	if err := r.db.GetDB().First(&campaign, id).Error; err != nil {
+	if err := r.db.GetDB().
+		Preload("Branch").
+		First(&campaign, id).Error; err != nil {
 		return nil, err
 	}
 	return &campaign, nil
@@ -60,7 +66,7 @@ func (r *campaignRepository) Delete(id uint) error {
 	return nil
 }
 
-// / Update updates an existing campaign
+// Update updates an existing campaign
 func (r *campaignRepository) Update(id uint, campaign *models.Campaign) error {
 	// Verificar si la campaña existe
 	var existingCampaign models.Campaign
@@ -71,11 +77,8 @@ func (r *campaignRepository) Update(id uint, campaign *models.Campaign) error {
 		return err
 	}
 
-	// Establecer el ID de la campaña
-	campaign.ID = id
-
-	// Guardar la campaña actualizada
-	if err := r.db.GetDB().Save(campaign).Error; err != nil {
+	// Actualizar la campaña
+	if err := r.db.GetDB().Model(&existingCampaign).Updates(campaign).Error; err != nil {
 		return err
 	}
 	return nil
@@ -87,4 +90,23 @@ func (r *campaignRepository) Create(campaign *models.Campaign) error {
 		return err
 	}
 	return nil
+}
+
+// FindByBranchAndDate busca una campaña para la sucursal y fecha proporcionada.
+func (r *campaignRepository) FindByBranchAndDate(branchID uint, date time.Time) (*models.Campaign, error) {
+	// Verificar si la conexión a la base de datos no es nil
+	if r.db == nil {
+		return nil, fmt.Errorf("database connection is nil")
+	}
+
+	var campaign models.Campaign
+	err := r.db.GetDB().Where("branch_id = ? AND start_date <= ? AND end_date >= ?", branchID, date, date).First(&campaign).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, fmt.Errorf("no campaign found for branch ID %d on date %s", branchID, date)
+		}
+		return nil, err
+	}
+
+	return &campaign, nil
 }

@@ -5,8 +5,8 @@ import (
 	"strconv"
 
 	"leal-technical-test/config"
-	"leal-technical-test/internal/domain/models"
 	"leal-technical-test/internal/infra/adapters"
+	"leal-technical-test/internal/infra/dtos"
 	"leal-technical-test/internal/infra/repository"
 	"leal-technical-test/internal/services"
 
@@ -22,7 +22,9 @@ type TransactionController struct {
 func NewTransactionController() *TransactionController {
 	db := config.NewPostgresConnection()
 	repo := repository.NewTransactionRepository(db)
-	service := services.NewTransactionService(repo)
+	repobranch := repository.NewBranchRepository(db)
+	repoCampaign := repository.NewCampaignRepository(db)
+	service := services.NewTransactionService(repo, repobranch, repoCampaign)
 
 	return &TransactionController{
 		service: service,
@@ -35,6 +37,7 @@ func NewTransactionController() *TransactionController {
 // @Tags transactions
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Router /leal-test/transactions [get]
 func (c *TransactionController) GetAllTransactions(ctx *gin.Context) {
 	transactions, err := c.service.GetAllTransactions()
@@ -53,6 +56,7 @@ func (c *TransactionController) GetAllTransactions(ctx *gin.Context) {
 // @Tags transactions
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Transaction ID"
 // @Router /leal-test/transactions/{id} [get]
 func (c *TransactionController) GetTransactionById(ctx *gin.Context) {
@@ -78,6 +82,7 @@ func (c *TransactionController) GetTransactionById(ctx *gin.Context) {
 // @Tags transactions
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param user_id path int true "User ID"
 // @Router /leal-test/transactions/user/{user_id} [get]
 func (c *TransactionController) GetTransactionsByUserId(ctx *gin.Context) {
@@ -103,20 +108,23 @@ func (c *TransactionController) GetTransactionsByUserId(ctx *gin.Context) {
 // @Tags transactions
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param transaction body dtos.TransactionRequest true "Transaction data"
 // @Router /leal-test/transactions [post]
 func (c *TransactionController) CreateTransaction(ctx *gin.Context) {
-	var transaction models.Transaction
-	if err := ctx.ShouldBindJSON(&transaction); err != nil {
+	var transactionDTO = dtos.TransactionRequest{}
+
+	if err := ctx.ShouldBindJSON(&transactionDTO); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := c.service.CreateTransaction(&transaction)
+	transaction := adapters.ToTransactionModel(transactionDTO)
+	point, err := c.service.CreateTransaction(&transaction)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, transaction)
+	ctx.JSON(http.StatusOK, gin.H{"point": point})
 }

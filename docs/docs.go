@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/leal-test/acumulaterewards": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get all accumulated rewards",
                 "consumes": [
                     "application/json"
@@ -31,6 +36,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Create a new accumulated reward",
                 "consumes": [
                     "application/json"
@@ -58,6 +68,11 @@ const docTemplate = `{
         },
         "/leal-test/acumulaterewards/user/{user_id}/store/{store_id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get accumulated reward by UserID and StoreID",
                 "consumes": [
                     "application/json"
@@ -90,6 +105,11 @@ const docTemplate = `{
         },
         "/leal-test/acumulaterewards/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get accumulated reward by ID",
                 "consumes": [
                     "application/json"
@@ -113,6 +133,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Update an accumulated reward",
                 "consumes": [
                     "application/json"
@@ -145,6 +170,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Delete an accumulated reward by ID",
                 "tags": [
                     "accumulated_rewards"
@@ -164,6 +194,11 @@ const docTemplate = `{
         },
         "/leal-test/branches": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get all branches",
                 "consumes": [
                     "application/json"
@@ -178,6 +213,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Create a new branch",
                 "consumes": [
                     "application/json"
@@ -205,6 +245,11 @@ const docTemplate = `{
         },
         "/leal-test/branches/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get branch by ID",
                 "consumes": [
                     "application/json"
@@ -228,6 +273,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Update a branch",
                 "consumes": [
                     "application/json"
@@ -260,6 +310,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Delete a branch by ID",
                 "tags": [
                     "branches"
@@ -279,6 +334,11 @@ const docTemplate = `{
         },
         "/leal-test/campaigns": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get all campaigns",
                 "consumes": [
                     "application/json"
@@ -293,6 +353,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Create a new campaign",
                 "consumes": [
                     "application/json"
@@ -320,6 +385,11 @@ const docTemplate = `{
         },
         "/leal-test/campaigns/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get campaign by ID",
                 "consumes": [
                     "application/json"
@@ -343,6 +413,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Update a campaign",
                 "consumes": [
                     "application/json"
@@ -375,6 +450,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Delete a campaign by ID",
                 "tags": [
                     "campaigns"
@@ -392,8 +472,45 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/leal-test/login": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Authenticate user and return JWT token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Login user",
+                "parameters": [
+                    {
+                        "description": "Login data",
+                        "name": "loginData",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.UserLogin"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/leal-test/rewards": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get all rewards",
                 "consumes": [
                     "application/json"
@@ -408,6 +525,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Create a new reward",
                 "consumes": [
                     "application/json"
@@ -435,6 +557,11 @@ const docTemplate = `{
         },
         "/leal-test/rewards/store/{store_id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get rewards by StoreID",
                 "consumes": [
                     "application/json"
@@ -460,6 +587,11 @@ const docTemplate = `{
         },
         "/leal-test/rewards/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get reward by ID",
                 "consumes": [
                     "application/json"
@@ -483,6 +615,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Update a reward",
                 "consumes": [
                     "application/json"
@@ -515,6 +652,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Delete a reward by ID",
                 "tags": [
                     "rewards"
@@ -534,6 +676,11 @@ const docTemplate = `{
         },
         "/leal-test/stores": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get all stores",
                 "consumes": [
                     "application/json"
@@ -548,6 +695,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Create store",
                 "consumes": [
                     "application/json"
@@ -575,6 +727,11 @@ const docTemplate = `{
         },
         "/leal-test/stores/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get store by ID",
                 "consumes": [
                     "application/json"
@@ -598,6 +755,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Update store",
                 "consumes": [
                     "application/json"
@@ -630,6 +792,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Delete store by ID",
                 "consumes": [
                     "application/json"
@@ -655,6 +822,11 @@ const docTemplate = `{
         },
         "/leal-test/transactions": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get all transactions",
                 "consumes": [
                     "application/json"
@@ -669,6 +841,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Create a new transaction",
                 "consumes": [
                     "application/json"
@@ -696,6 +873,11 @@ const docTemplate = `{
         },
         "/leal-test/transactions/user/{user_id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get transactions by UserID",
                 "consumes": [
                     "application/json"
@@ -721,6 +903,11 @@ const docTemplate = `{
         },
         "/leal-test/transactions/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get transaction by ID",
                 "consumes": [
                     "application/json"
@@ -746,6 +933,11 @@ const docTemplate = `{
         },
         "/leal-test/users": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get all users",
                 "consumes": [
                     "application/json"
@@ -760,6 +952,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Create user",
                 "consumes": [
                     "application/json"
@@ -778,7 +975,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dtos.User"
+                            "$ref": "#/definitions/dtos.UserRequest"
                         }
                     }
                 ],
@@ -787,6 +984,11 @@ const docTemplate = `{
         },
         "/leal-test/users/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get user by ID",
                 "consumes": [
                     "application/json"
@@ -810,6 +1012,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Update user",
                 "consumes": [
                     "application/json"
@@ -835,13 +1042,18 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dtos.User"
+                            "$ref": "#/definitions/dtos.UserRequest"
                         }
                     }
                 ],
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Delete user by ID",
                 "consumes": [
                     "application/json"
@@ -955,22 +1167,27 @@ const docTemplate = `{
                 "branch_id": {
                     "type": "integer"
                 },
-                "date": {
-                    "type": "string"
-                },
                 "user_id": {
                     "type": "integer"
                 }
             }
         },
-        "dtos.User": {
+        "dtos.UserLogin": {
             "type": "object",
             "properties": {
                 "email": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "integer"
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.UserRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -986,14 +1203,6 @@ const docTemplate = `{
     },
     "securityDefinitions": {
         "ApiKeyAuth": {
-            "type": "apiKey",
-            "name": "X-API-Key",
-            "in": "header"
-        },
-        "BasicAuth": {
-            "type": "basic"
-        },
-        "BearerAuth": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"

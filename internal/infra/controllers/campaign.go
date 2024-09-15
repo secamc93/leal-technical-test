@@ -35,6 +35,7 @@ func NewCampaignController() *CampaignController {
 // @Tags campaigns
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Router /leal-test/campaigns [get]
 func (c *CampaignController) GetAllCampaigns(ctx *gin.Context) {
 	campaigns, err := c.service.GetAllCampaigns()
@@ -53,6 +54,7 @@ func (c *CampaignController) GetAllCampaigns(ctx *gin.Context) {
 // @Tags campaigns
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Campaign ID"
 // @Router /leal-test/campaigns/{id} [get]
 func (c *CampaignController) GetCampaignById(ctx *gin.Context) {
@@ -77,6 +79,7 @@ func (c *CampaignController) GetCampaignById(ctx *gin.Context) {
 // @Tags campaigns
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param campaign body dtos.CampaignRequest true "Campaign data"
 // @Router /leal-test/campaigns [post]
 func (c *CampaignController) CreateCampaign(ctx *gin.Context) {
@@ -103,6 +106,7 @@ func (c *CampaignController) CreateCampaign(ctx *gin.Context) {
 // @Tags campaigns
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Campaign ID"
 // @Param campaign body dtos.CampaignRequest true "Campaign data"
 // @Router /leal-test/campaigns/{id} [put]
@@ -133,6 +137,7 @@ func (c *CampaignController) UpdateCampaign(ctx *gin.Context) {
 // @Summary Delete campaign by ID
 // @Description Delete a campaign by ID
 // @Tags campaigns
+// @Security ApiKeyAuth
 // @Param id path int true "Campaign ID"
 // @Router /leal-test/campaigns/{id} [delete]
 func (c *CampaignController) DeleteCampaign(ctx *gin.Context) {

@@ -35,6 +35,7 @@ func NewAccumulatedRewardController() *AccumulatedRewardController {
 // @Tags accumulated_rewards
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Router /leal-test/acumulaterewards [get]
 func (c *AccumulatedRewardController) GetAllRewards(ctx *gin.Context) {
 	rewards, err := c.service.GetAllRewards()
@@ -53,6 +54,7 @@ func (c *AccumulatedRewardController) GetAllRewards(ctx *gin.Context) {
 // @Tags accumulated_rewards
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Reward ID"
 // @Router /leal-test/acumulaterewards/{id} [get]
 func (c *AccumulatedRewardController) GetRewardById(ctx *gin.Context) {
@@ -77,6 +79,7 @@ func (c *AccumulatedRewardController) GetRewardById(ctx *gin.Context) {
 // @Tags accumulated_rewards
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param user_id path int true "User ID"
 // @Param store_id path int true "Store ID"
 // @Router /leal-test/acumulaterewards/user/{user_id}/store/{store_id} [get]
@@ -108,6 +111,7 @@ func (c *AccumulatedRewardController) GetRewardByUserAndStore(ctx *gin.Context) 
 // @Tags accumulated_rewards
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param reward body dtos.AccumulatedRewardRequest true "Reward data"
 // @Router /leal-test/acumulaterewards [post]
 func (c *AccumulatedRewardController) CreateReward(ctx *gin.Context) {
@@ -132,6 +136,7 @@ func (c *AccumulatedRewardController) CreateReward(ctx *gin.Context) {
 // @Tags accumulated_rewards
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Reward ID"
 // @Param reward body dtos.AccumulatedRewardRequest true "Reward data"
 // @Router /leal-test/acumulaterewards/{id} [put]
@@ -162,6 +167,7 @@ func (c *AccumulatedRewardController) UpdateReward(ctx *gin.Context) {
 // @Summary Delete accumulated reward by ID
 // @Description Delete an accumulated reward by ID
 // @Tags accumulated_rewards
+// @Security ApiKeyAuth
 // @Param id path int true "Reward ID"
 // @Router /leal-test/acumulaterewards/{id} [delete]
 func (c *AccumulatedRewardController) DeleteReward(ctx *gin.Context) {

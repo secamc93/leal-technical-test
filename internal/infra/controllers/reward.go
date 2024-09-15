@@ -35,6 +35,7 @@ func NewRewardController() *RewardController {
 // @Tags rewards
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Router /leal-test/rewards [get]
 func (c *RewardController) GetAllRewards(ctx *gin.Context) {
 	rewards, err := c.service.GetAllRewards()
@@ -52,6 +53,7 @@ func (c *RewardController) GetAllRewards(ctx *gin.Context) {
 // @Tags rewards
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Reward ID"
 // @Router /leal-test/rewards/{id} [get]
 func (c *RewardController) GetRewardById(ctx *gin.Context) {
@@ -76,6 +78,7 @@ func (c *RewardController) GetRewardById(ctx *gin.Context) {
 // @Tags rewards
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param store_id path int true "Store ID"
 // @Router /leal-test/rewards/store/{store_id} [get]
 func (c *RewardController) GetRewardsByStoreId(ctx *gin.Context) {
@@ -100,6 +103,7 @@ func (c *RewardController) GetRewardsByStoreId(ctx *gin.Context) {
 // @Tags rewards
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param reward body dtos.RewardRequest true "Reward data"
 // @Router /leal-test/rewards [post]
 func (c *RewardController) CreateReward(ctx *gin.Context) {
@@ -125,6 +129,7 @@ func (c *RewardController) CreateReward(ctx *gin.Context) {
 // @Tags rewards
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Reward ID"
 // @Param reward body dtos.RewardRequest true "Reward data"
 // @Router /leal-test/rewards/{id} [put]
@@ -154,6 +159,7 @@ func (c *RewardController) UpdateReward(ctx *gin.Context) {
 // @Summary Delete reward by ID
 // @Description Delete a reward by ID
 // @Tags rewards
+// @Security ApiKeyAuth
 // @Param id path int true "Reward ID"
 // @Router /leal-test/rewards/{id} [delete]
 func (c *RewardController) DeleteReward(ctx *gin.Context) {

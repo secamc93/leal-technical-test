@@ -1,14 +1,36 @@
 version: '3.8'
 
 services:
+
   postgres:
     image: postgis/postgis:15-3.3
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres 
+      POSTGRES_DB: postgres
     ports:
       - "5433:5432"
+    networks:
+      - my_network
+
+  test:
+    image: m1993/cam:leal-test
+    container_name: leal-test-service
+    ports:
+      - "50015:50015"
+    environment:
+      - POSTGRES_DB_HOST=postgres
+      - POSTGRES_DB_PORT=5432
+      - POSTGRES_DB_USER=postgres
+      - POSTGRES_DB_PASSWORD=postgres
+      - POSTGRES_DB_NAME=postgres
+      - POSTGRES_DB_SSLMODE=disable
+      - GORM_MODE=off
+      - GIN_MODE=release
+      - SERVER_PORT=0.0.0.0:50015
+    restart: always  # Reiniciar automáticamente si falla
+    depends_on:
+      - postgres  # Asegura que Postgres se levante antes que test
     networks:
       - my_network
 
@@ -18,3 +40,4 @@ networks:
       ipam:
         config:
           - subnet: 192.168.4.0/24
+

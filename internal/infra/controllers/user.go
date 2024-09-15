@@ -36,6 +36,7 @@ func NewUserController() *UserController {
 // @Tags users
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Router /leal-test/users [get]
 func (c *UserController) GetAllUsers(ctx *gin.Context) {
 	users, err := c.service.GetAllUsers()
@@ -55,6 +56,7 @@ func (c *UserController) GetAllUsers(ctx *gin.Context) {
 // @Tags users
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "User ID"
 // @Router /leal-test/users/{id} [get]
 func (c *UserController) GetUserById(ctx *gin.Context) {
@@ -78,6 +80,7 @@ func (c *UserController) GetUserById(ctx *gin.Context) {
 // @Tags users
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "User ID"
 // @Router /leal-test/users/{id} [delete]
 func (c *UserController) DeleteUser(ctx *gin.Context) {
@@ -101,8 +104,9 @@ func (c *UserController) DeleteUser(ctx *gin.Context) {
 // @Tags users
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path int true "Store ID"
-// @Param user body dtos.User true "User to update"
+// @Param user body dtos.UserRequest true "User to update"
 // @Router /leal-test/users/{id} [put]
 func (c *UserController) UpdateUser(ctx *gin.Context) {
 	idParams := ctx.Param("id")
@@ -112,7 +116,7 @@ func (c *UserController) UpdateUser(ctx *gin.Context) {
 		return
 	}
 
-	var userDTO dtos.User
+	var userDTO dtos.UserRequest
 	if err := ctx.ShouldBindJSON(&userDTO); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
 		return
@@ -134,7 +138,8 @@ func (c *UserController) UpdateUser(ctx *gin.Context) {
 // @Tags users
 // @Accept  json
 // @Produce  json
-// @Param user body dtos.User true "User to create"
+// @Security ApiKeyAuth
+// @Param user body dtos.UserRequest true "User to create"
 // @Router /leal-test/users [post]
 func (c *UserController) CreateUser(ctx *gin.Context) {
 	var user models.User
@@ -149,4 +154,31 @@ func (c *UserController) CreateUser(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusCreated, gin.H{"message": "User created successfully"})
+}
+
+// Login handles user login
+
+// @Summary Login user
+// @Description Authenticate user and return JWT token
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param loginData body dtos.UserLogin true "Login data"
+// @Router /leal-test/login [post]
+func (ctrl *UserController) Login(c *gin.Context) {
+	var loginData dtos.UserLogin
+
+	if err := c.ShouldBindJSON(&loginData); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	token, err := ctrl.service.Login(loginData.Email, loginData.Password)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"token": token})
 }

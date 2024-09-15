@@ -18,6 +18,7 @@ type Env struct {
 	GormMode           string
 	GinMode            string
 	ServerPort         string
+	JwtKey             string
 	log                ILogger
 }
 
@@ -48,6 +49,7 @@ func NewGetEnv() *Env {
 			GormMode:           os.Getenv("GORM_MODE"),
 			GinMode:            os.Getenv("GIN_MODE"),
 			ServerPort:         os.Getenv("SERVER_PORT"),
+			JwtKey:             os.Getenv("JWT_KEY"),
 			log:                NewLogger(),
 		}
 	})
@@ -79,6 +81,9 @@ func validateEnvVariables(env *Env) {
 	}
 	if env.GinMode == "" {
 		log.Fatal("GIN_MODE is required but not set")
+	}
+	if env.JwtKey == "" {
+		log.Fatal("JWT_KEY is required but not set")
 	}
 
 }
