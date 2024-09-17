@@ -77,9 +77,6 @@ func (r *Router) InitializeRoutes() {
 			protected.GET("/acumulaterewards", r.accumulatedRewardController.GetAllRewards)
 			protected.GET("/acumulaterewards/:id", r.accumulatedRewardController.GetRewardById)
 			protected.GET("/acumulaterewards/user/:user_id/store/:store_id", r.accumulatedRewardController.GetRewardByUserAndStore)
-			protected.POST("/acumulaterewards", r.accumulatedRewardController.CreateReward)
-			protected.PUT("/acumulaterewards/:id", r.accumulatedRewardController.UpdateReward)
-			protected.DELETE("/acumulaterewards/:id", r.accumulatedRewardController.DeleteReward)
 
 			protected.GET("/rewards", r.rewardController.GetAllRewards)
 			protected.GET("/rewards/:id", r.rewardController.GetRewardById)
@@ -87,6 +84,7 @@ func (r *Router) InitializeRoutes() {
 			protected.POST("/rewards", r.rewardController.CreateReward)
 			protected.PUT("/rewards/:id", r.rewardController.UpdateReward)
 			protected.DELETE("/rewards/:id", r.rewardController.DeleteReward)
+			protected.GET("/rewards/claim/:user_id/:reward_id/:store_id", r.rewardController.GetClaimRewardPoints)
 
 			protected.GET("/transactions", r.transactionController.GetAllTransactions)
 			protected.GET("/transactions/:id", r.transactionController.GetTransactionById)

@@ -27,36 +27,6 @@
                 ],
                 "summary": "Get all accumulated rewards",
                 "responses": {}
-            },
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Create a new accumulated reward",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "accumulated_rewards"
-                ],
-                "summary": "Create a new accumulated reward",
-                "parameters": [
-                    {
-                        "description": "Reward data",
-                        "name": "reward",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dtos.AccumulatedRewardRequest"
-                        }
-                    }
-                ],
-                "responses": {}
             }
         },
         "/leal-test/acumulaterewards/user/{user_id}/store/{store_id}": {
@@ -114,65 +84,6 @@
                     "accumulated_rewards"
                 ],
                 "summary": "Get accumulated reward by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Reward ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {}
-            },
-            "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Update an accumulated reward",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "accumulated_rewards"
-                ],
-                "summary": "Update an accumulated reward",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Reward ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Reward data",
-                        "name": "reward",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dtos.AccumulatedRewardRequest"
-                        }
-                    }
-                ],
-                "responses": {}
-            },
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Delete an accumulated reward by ID",
-                "tags": [
-                    "accumulated_rewards"
-                ],
-                "summary": "Delete accumulated reward by ID",
                 "parameters": [
                     {
                         "type": "integer",
@@ -543,6 +454,50 @@
                         "schema": {
                             "$ref": "#/definitions/dtos.RewardRequest"
                         }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/leal-test/rewards/claim/{user_id}/{reward_id}/{store_id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Claim reward points for a user at a specific store",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rewards"
+                ],
+                "summary": "Claim reward points",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Reward ID",
+                        "name": "reward_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Store ID",
+                        "name": "store_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {}
@@ -1072,23 +1027,6 @@
         }
     },
     "definitions": {
-        "dtos.AccumulatedRewardRequest": {
-            "type": "object",
-            "properties": {
-                "cashback_accumulated": {
-                    "type": "number"
-                },
-                "points_accumulated": {
-                    "type": "number"
-                },
-                "store_id": {
-                    "type": "integer"
-                },
-                "user_id": {
-                    "type": "integer"
-                }
-            }
-        },
         "dtos.BranchRequest": {
             "type": "object",
             "properties": {

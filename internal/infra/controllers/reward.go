@@ -15,7 +15,8 @@ import (
 
 // RewardController struct
 type RewardController struct {
-	service services.RewardService
+	service          services.RewardService
+	serviceAcumulate services.AccumulatedRewardService
 }
 
 // NewRewardController constructor
@@ -23,9 +24,12 @@ func NewRewardController() *RewardController {
 	db := config.NewPostgresConnection()
 	repo := repository.NewRewardRepository(db)
 	service := services.NewRewardService(repo)
+	repoAcumulate := repository.NewAccumulatedRewardRepository(db)
+	servAcumulate := services.NewAccumulatedRewardService(repoAcumulate)
 
 	return &RewardController{
-		service: service,
+		service:          service,
+		serviceAcumulate: servAcumulate,
 	}
 }
 
@@ -176,4 +180,60 @@ func (c *RewardController) DeleteReward(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"message": "Reward deleted successfully"})
+}
+
+// GetClaimRewardPoints godoc
+// @Summary Claim reward points
+// @Description Claim reward points for a user at a specific store
+// @Tags rewards
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param user_id path int true "User ID"
+// @Param reward_id path int true "Reward ID"
+// @Param store_id path int true "Store ID"
+// @Router /leal-test/rewards/claim/{user_id}/{reward_id}/{store_id} [get]
+func (c *RewardController) GetClaimRewardPoints(ctx *gin.Context) {
+	userID, err := strconv.Atoi(ctx.Param("user_id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
+	rewardID, err := strconv.Atoi(ctx.Param("reward_id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid reward ID"})
+		return
+	}
+	storeID, err := strconv.Atoi(ctx.Param("store_id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid store ID"})
+		return
+	}
+
+	reward, err := c.service.GetRewardById(uint(rewardID))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	acumulatedReward, err := c.serviceAcumulate.GetRewardByUserAndStore(uint(userID), uint(storeID))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	claimRewardPoints := dtos.ClaimRewardRequest{
+		UserID:            uint(userID),
+		PointsAccumulated: acumulatedReward.PointsAccumulated,
+		RewardID:          uint(rewardID),
+		RewardRequired:    reward.PointsRequired,
+		StoreID:           uint(storeID),
+		Description:       reward.Description,
+	}
+
+	rewardDescription, err := c.serviceAcumulate.ClaimReward(claimRewardPoints)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"message": rewardDescription})
 }

@@ -5,7 +5,6 @@ import (
 	"strconv"
 
 	"leal-technical-test/config"
-	"leal-technical-test/internal/domain/models"
 	"leal-technical-test/internal/infra/adapters"
 	"leal-technical-test/internal/infra/repository"
 	"leal-technical-test/internal/services"
@@ -101,87 +100,7 @@ func (c *AccumulatedRewardController) GetRewardByUserAndStore(ctx *gin.Context) 
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+	rewardDTO := adapters.ToAccumulateRewardDTO(reward)
 
-	ctx.JSON(http.StatusOK, reward)
-}
-
-// CreateReward handles POST requests to create a new accumulated reward
-// @Summary Create a new accumulated reward
-// @Description Create a new accumulated reward
-// @Tags accumulated_rewards
-// @Accept  json
-// @Produce  json
-// @Security ApiKeyAuth
-// @Param reward body dtos.AccumulatedRewardRequest true "Reward data"
-// @Router /leal-test/acumulaterewards [post]
-func (c *AccumulatedRewardController) CreateReward(ctx *gin.Context) {
-	var reward models.AccumulatedReward
-	if err := ctx.ShouldBindJSON(&reward); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	err := c.service.CreateReward(&reward)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	ctx.JSON(http.StatusOK, reward)
-}
-
-// UpdateReward handles PUT requests to update an accumulated reward
-// @Summary Update an accumulated reward
-// @Description Update an accumulated reward
-// @Tags accumulated_rewards
-// @Accept  json
-// @Produce  json
-// @Security ApiKeyAuth
-// @Param id path int true "Reward ID"
-// @Param reward body dtos.AccumulatedRewardRequest true "Reward data"
-// @Router /leal-test/acumulaterewards/{id} [put]
-func (c *AccumulatedRewardController) UpdateReward(ctx *gin.Context) {
-	id, err := strconv.Atoi(ctx.Param("id"))
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid reward ID"})
-		return
-	}
-
-	var reward models.AccumulatedReward
-	if err := ctx.ShouldBindJSON(&reward); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	reward.ID = uint(id)
-	err = c.service.UpdateReward(&reward)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	ctx.JSON(http.StatusOK, reward)
-}
-
-// DeleteReward handles DELETE requests to delete an accumulated reward by ID
-// @Summary Delete accumulated reward by ID
-// @Description Delete an accumulated reward by ID
-// @Tags accumulated_rewards
-// @Security ApiKeyAuth
-// @Param id path int true "Reward ID"
-// @Router /leal-test/acumulaterewards/{id} [delete]
-func (c *AccumulatedRewardController) DeleteReward(ctx *gin.Context) {
-	id, err := strconv.Atoi(ctx.Param("id"))
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid reward ID"})
-		return
-	}
-
-	err = c.service.DeleteReward(uint(id))
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	ctx.JSON(http.StatusOK, gin.H{"message": "Reward deleted successfully"})
+	ctx.JSON(http.StatusOK, rewardDTO)
 }

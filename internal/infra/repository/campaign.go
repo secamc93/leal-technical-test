@@ -94,13 +94,16 @@ func (r *campaignRepository) Create(campaign *models.Campaign) error {
 
 // FindByBranchAndDate busca una campaña para la sucursal y fecha proporcionada.
 func (r *campaignRepository) FindByBranchAndDate(branchID uint, date time.Time) (*models.Campaign, error) {
-	// Verificar si la conexión a la base de datos no es nil
-	if r.db == nil {
-		return nil, fmt.Errorf("database connection is nil")
+	var campaign models.Campaign
+	err := r.db.GetDB().Where("branch_id = ?", branchID).First(&campaign).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, fmt.Errorf("no campaign found for branch ID %d", branchID)
+		}
+		return nil, err
 	}
 
-	var campaign models.Campaign
-	err := r.db.GetDB().Where("branch_id = ? AND start_date <= ? AND end_date >= ?", branchID, date, date).First(&campaign).Error
+	err = r.db.GetDB().Where("branch_id = ? AND start_date <= ? AND end_date >= ?", branchID, date, date).First(&campaign).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, fmt.Errorf("no campaign found for branch ID %d on date %s", branchID, date)

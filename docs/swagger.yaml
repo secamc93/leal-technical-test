@@ -1,16 +1,5 @@
 basePath: /
 definitions:
-  dtos.AccumulatedRewardRequest:
-    properties:
-      cashback_accumulated:
-        type: number
-      points_accumulated:
-        type: number
-      store_id:
-        type: integer
-      user_id:
-        type: integer
-    type: object
   dtos.BranchRequest:
     properties:
       address:
@@ -97,40 +86,7 @@ paths:
       summary: Get all accumulated rewards
       tags:
       - accumulated_rewards
-    post:
-      consumes:
-      - application/json
-      description: Create a new accumulated reward
-      parameters:
-      - description: Reward data
-        in: body
-        name: reward
-        required: true
-        schema:
-          $ref: '#/definitions/dtos.AccumulatedRewardRequest'
-      produces:
-      - application/json
-      responses: {}
-      security:
-      - ApiKeyAuth: []
-      summary: Create a new accumulated reward
-      tags:
-      - accumulated_rewards
   /leal-test/acumulaterewards/{id}:
-    delete:
-      description: Delete an accumulated reward by ID
-      parameters:
-      - description: Reward ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      responses: {}
-      security:
-      - ApiKeyAuth: []
-      summary: Delete accumulated reward by ID
-      tags:
-      - accumulated_rewards
     get:
       consumes:
       - application/json
@@ -147,30 +103,6 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Get accumulated reward by ID
-      tags:
-      - accumulated_rewards
-    put:
-      consumes:
-      - application/json
-      description: Update an accumulated reward
-      parameters:
-      - description: Reward ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: Reward data
-        in: body
-        name: reward
-        required: true
-        schema:
-          $ref: '#/definitions/dtos.AccumulatedRewardRequest'
-      produces:
-      - application/json
-      responses: {}
-      security:
-      - ApiKeyAuth: []
-      summary: Update an accumulated reward
       tags:
       - accumulated_rewards
   /leal-test/acumulaterewards/user/{user_id}/store/{store_id}:
@@ -482,6 +414,35 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Update a reward
+      tags:
+      - rewards
+  /leal-test/rewards/claim/{user_id}/{reward_id}/{store_id}:
+    get:
+      consumes:
+      - application/json
+      description: Claim reward points for a user at a specific store
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: Reward ID
+        in: path
+        name: reward_id
+        required: true
+        type: integer
+      - description: Store ID
+        in: path
+        name: store_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Claim reward points
       tags:
       - rewards
   /leal-test/rewards/store/{store_id}:

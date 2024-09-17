@@ -13,7 +13,7 @@ type TransactionService interface {
 	GetAllTransactions() ([]models.Transaction, error)
 	GetTransactionById(id uint) (*models.Transaction, error)
 	GetTransactionsByUserId(userID uint) ([]models.Transaction, error)
-	CreateTransaction(transaction *models.Transaction) (float64, error)
+	CreateTransaction(transaction *models.Transaction) (*models.Transaction, uint, error)
 }
 
 // transactionService struct
@@ -29,6 +29,7 @@ func NewTransactionService(
 	repo repository.TransactionRepository,
 	repoBranch repository.BranchRepository,
 	repoCampaign repository.CampaignRepository,
+
 ) TransactionService {
 	log := config.NewLogger()
 	return &transactionService{
@@ -67,41 +68,31 @@ func (s *transactionService) GetTransactionsByUserId(userID uint) ([]models.Tran
 }
 
 // CreateTransaction creates a new transaction
-func (s *transactionService) CreateTransaction(transaction *models.Transaction) (float64, error) {
+func (s *transactionService) CreateTransaction(transaction *models.Transaction) (*models.Transaction, uint, error) {
 	// Buscar sucursal
 	branch, err := s.repoBranch.GetById(transaction.BranchID)
 	if err != nil {
-		return 0, fmt.Errorf("branch not found")
+		return nil, 0, fmt.Errorf("branch not found")
 	}
 
-	// Obtener factor de conversión y configurar fecha de la transacción
-	conversionFactor := branch.Store.ConversionFactor
-	transaction.Date = time.Now()
-	transaction.RewardType = "points"
-
-	// Buscar campaña activa en la sucursal y fecha específica
-	campaign, _ := s.repoCampaign.FindByBranchAndDate(transaction.BranchID, transaction.Date)
-
-	var points float64
-	// Validación para la campaña de sucursal 1 (doble de puntos entre el 15 y 30 de mayo)
-	if campaign != nil && campaign.Type == "double" {
-		points = (transaction.Amount * conversionFactor) * 2
-	} else if campaign != nil && campaign.Type == "additional" && transaction.Amount > 20000 {
-		// Validación para la campaña de sucursal 2 (30% puntos adicionales para compras > 20000 entre el 15 y 20 de mayo)
-		points = (transaction.Amount * conversionFactor) * 1.30
+	campaign, err := s.repoCampaign.FindByBranchAndDate(transaction.BranchID, time.Now())
+	if err != nil {
+		transaction.PointsEarned = transaction.Amount * branch.Store.ConversionFactor
 	} else {
-		// Cálculo estándar si no aplica ninguna campaña
-		points = transaction.Amount * conversionFactor
+		if campaign.Type == "double" {
+			transaction.PointsEarned = (transaction.Amount * branch.Store.ConversionFactor) * 2
+		} else if campaign.Type == "additional" && transaction.Amount > 20000 {
+			transaction.PointsEarned = (transaction.Amount * branch.Store.ConversionFactor) * 1.30
+		}
 	}
 
-	// Asignar los puntos ganados
-	transaction.PointsEarned = points
-
-	// Guardar la transacción
+	transaction.RewardType = "points"
+	s.log.Info("transaction.PointsEarned: ", transaction.PointsEarned)
 	err = s.repo.Create(transaction)
 	if err != nil {
-		return 0, fmt.Errorf("failed to create transaction: %v", err)
+		return nil, 0, fmt.Errorf("failed to create transaction: %v", err)
 	}
 
-	return points, nil
+	fmt.Println("transactionService.CreateTransaction", branch.StoreID)
+	return transaction, branch.StoreID, nil
 }

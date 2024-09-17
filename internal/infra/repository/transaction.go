@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"leal-technical-test/config"
 	"leal-technical-test/internal/domain/models"
 )
@@ -63,6 +64,7 @@ func (r *transactionRepository) GetByUserId(userID uint) ([]models.Transaction, 
 
 // Create creates a new transaction
 func (r *transactionRepository) Create(transaction *models.Transaction) error {
+	fmt.Println("transactionRepository.Create", transaction)
 	if err := r.db.GetDB().Create(transaction).Error; err != nil {
 		return err
 	}

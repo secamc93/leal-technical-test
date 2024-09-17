@@ -43,8 +43,8 @@ func ToTransactionDTOs(transactions []models.Transaction) []dtos.TransactionResp
 }
 
 // Convierte un DTO en un modelo de dominio
-func ToTransactionModel(transaction dtos.TransactionRequest) models.Transaction {
-	return models.Transaction{
+func ToTransactionModel(transaction dtos.TransactionRequest) *models.Transaction {
+	return &models.Transaction{
 		UserID:   transaction.UserID,
 		BranchID: transaction.BranchID,
 		Amount:   transaction.Amount,

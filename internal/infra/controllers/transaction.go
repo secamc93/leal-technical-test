@@ -15,7 +15,8 @@ import (
 
 // TransactionController struct
 type TransactionController struct {
-	service services.TransactionService
+	service          services.TransactionService
+	serviceAcumulate services.AccumulatedRewardService
 }
 
 // NewTransactionController constructor
@@ -25,9 +26,12 @@ func NewTransactionController() *TransactionController {
 	repobranch := repository.NewBranchRepository(db)
 	repoCampaign := repository.NewCampaignRepository(db)
 	service := services.NewTransactionService(repo, repobranch, repoCampaign)
+	repoAcumulate := repository.NewAccumulatedRewardRepository(db)
+	serviceAcumulate := services.NewAccumulatedRewardService(repoAcumulate)
 
 	return &TransactionController{
-		service: service,
+		service:          service,
+		serviceAcumulate: serviceAcumulate,
 	}
 }
 
@@ -120,11 +124,14 @@ func (c *TransactionController) CreateTransaction(ctx *gin.Context) {
 	}
 
 	transaction := adapters.ToTransactionModel(transactionDTO)
-	point, err := c.service.CreateTransaction(&transaction)
+	transaction, storeId, err := c.service.CreateTransaction(transaction)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
-	ctx.JSON(http.StatusOK, gin.H{"point": point})
+	err = c.serviceAcumulate.CreateReward(storeId, transaction)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	ctx.JSON(http.StatusOK, gin.H{"point": transaction.PointsEarned})
 }

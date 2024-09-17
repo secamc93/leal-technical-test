@@ -1,8 +1,11 @@
 package repository
 
 import (
+	"fmt"
 	"leal-technical-test/config"
 	"leal-technical-test/internal/domain/models"
+
+	"gorm.io/gorm"
 )
 
 // AccumulatedRewardRepository interface
@@ -11,7 +14,7 @@ type AccumulatedRewardRepository interface {
 	GetById(id uint) (*models.AccumulatedReward, error)
 	GetByUserAndStore(userID uint, storeID uint) (*models.AccumulatedReward, error)
 	Delete(id uint) error
-	Update(reward *models.AccumulatedReward) error
+	UpdateAcumulateReward(userId uint, reward *models.AccumulatedReward) error
 	Create(reward *models.AccumulatedReward) error
 }
 
@@ -54,7 +57,9 @@ func (r *accumulatedRewardRepository) GetById(id uint) (*models.AccumulatedRewar
 // GetByUserAndStore retrieves an accumulated reward by UserID and StoreID
 func (r *accumulatedRewardRepository) GetByUserAndStore(userID uint, storeID uint) (*models.AccumulatedReward, error) {
 	var reward models.AccumulatedReward
-	if err := r.db.GetDB().Where("user_id = ? AND store_id = ?", userID, storeID).First(&reward).Error; err != nil {
+	if err := r.db.GetDB().
+		Preload("User").
+		Where("user_id = ? AND store_id = ?", userID, storeID).First(&reward).Error; err != nil {
 		return nil, err
 	}
 	return &reward, nil
@@ -67,10 +72,16 @@ func (r *accumulatedRewardRepository) Delete(id uint) error {
 	}
 	return nil
 }
+func (r *accumulatedRewardRepository) UpdateAcumulateReward(userId uint, reward *models.AccumulatedReward) error {
+	var existingReward models.AccumulatedReward
+	if err := r.db.GetDB().Where("user_id = ?", userId).First(&existingReward).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return fmt.Errorf("no record found for user_id: %d", userId)
+		}
+		return err
+	}
 
-// Update updates an existing accumulated reward
-func (r *accumulatedRewardRepository) Update(reward *models.AccumulatedReward) error {
-	if err := r.db.GetDB().Save(reward).Error; err != nil {
+	if err := r.db.GetDB().Model(&existingReward).Updates(reward).Error; err != nil {
 		return err
 	}
 	return nil
